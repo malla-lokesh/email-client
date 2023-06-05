@@ -1,25 +1,21 @@
 import React from "react";
-import './mailBoxHeader.css';
-import SignUpPage from "../Pages/SignUpPage";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../Store/AuthReducer";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+
     return <React.Fragment>
-        <Container>
-            <Row>
-                <Col md="auto">
-                    <h1>Mail Box</h1>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <h4>Sign up</h4>
-                </Col>
-                <Col>
-                    <SignUpPage/>
-                </Col>
-            </Row>
-        </Container>
+        <Row className="mt-4 mb-4">
+            <Col className={`${!isLoggedIn ? 'text-center' : 'd-flex justify-content-start'}`}>
+                <h1>Mail Box</h1>
+            </Col>
+            {isLoggedIn && <Col className="d-flex justify-content-end align-items-center">
+                <Button onClick={() => dispatch(authActions.setLogout(false))}>Logout</Button>
+            </Col>}
+        </Row>
     </React.Fragment>
 }
 
