@@ -8,13 +8,14 @@ const Header = () => {
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 
     return <React.Fragment>
-        <Row className="mt-4 mb-4">
-            <Col className={`${!isLoggedIn ? 'text-center' : 'd-flex justify-content-start'}`}>
+        <Row className={`pt-3 pb-3 ${isLoggedIn && 'mb-4 bg-dark text-white'}`}>
+            <Col className={`${!isLoggedIn ? 'text-center' : 'd-flex justify-content-around align-items-center'}`}>
                 <h1>Mail Box</h1>
+                {isLoggedIn && 
+                <Button variant="outline-light" onClick={() => dispatch(authActions.setLogout(false))}>
+                    Logout
+                </Button>}
             </Col>
-            {isLoggedIn && <Col className="d-flex justify-content-end align-items-center">
-                <Button onClick={() => dispatch(authActions.setLogout(false))}>Logout</Button>
-            </Col>}
         </Row>
     </React.Fragment>
 }
