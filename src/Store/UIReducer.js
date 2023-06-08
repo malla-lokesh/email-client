@@ -1,7 +1,8 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialUiState = {
-    theme: 'light'
+    theme: 'light',
+    composeMail: false
 }
 
 const ui = createSlice({
@@ -10,6 +11,9 @@ const ui = createSlice({
     reducers: {
         changeTheme(state) {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
+        },
+        setComposeMail(state, action) {
+            state.composeMail = action.payload;
         }
     }
 })

@@ -1,0 +1,27 @@
+.menu-icon {
+    display: inline-block;
+    margin-left: 50px;
+    cursor: pointer;
+  }
+  
+  .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin-bottom: 5px;
+    background-color: white;
+  }
+  
+  /* Animation for the menu icon */
+  .change .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+  }
+  
+  .change .bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .change .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+  }
+  
