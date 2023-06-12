@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, ListGroup, Offcanvas, Row } from "react-bootstrap";
+import { Button, Col, Nav, Offcanvas, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Store/AuthReducer";
 import './Header.css';
@@ -32,13 +32,13 @@ const Header = () => {
                             variant="danger"
                             onClick={() => {dispatch(uiActions.setComposeMail(true))}}
                         >Compose</Button>
-                        <ListGroup>
-                            <ListGroup.Item action>Inbox</ListGroup.Item>
-                            <ListGroup.Item action>Sent mail</ListGroup.Item>
-                            <ListGroup.Item action>Draft</ListGroup.Item>
-                            <ListGroup.Item action>Bin</ListGroup.Item>
-                            <ListGroup.Item action>Spam</ListGroup.Item>
-                        </ListGroup>
+                        <Nav className="justify-content-end flex-grow-1 pe-3">
+                            <Nav.Link action>Inbox</Nav.Link>
+                            <Nav.Link action>Sent mail</Nav.Link>
+                            <Nav.Link action>Draft</Nav.Link>
+                            <Nav.Link action>Bin</Nav.Link>
+                            <Nav.Link action>Spam</Nav.Link>
+                        </Nav>
                     </Offcanvas.Body>
                 </Offcanvas>
                 <h1 style={{marginLeft: '50px'}}>Mail Box</h1>

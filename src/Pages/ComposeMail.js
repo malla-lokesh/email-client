@@ -20,7 +20,7 @@ const ComposeMail = () => {
 
         const mailDetails = {
             from: myEmail,
-            mailId: toMail,
+            mailId: email.current.value,
             subject: subject.current.value,
             message: message.current.getEditor().getText().trim().replace(/(<([^>]+)>)/gi, "")
         }
@@ -74,6 +74,7 @@ const ComposeMail = () => {
                     right: 10,
                     height: '450px',
                     zIndex: 10,
+                    backgroundColor: 'whitesmoke',
                     overflowY: 'auto'
                 }}
                 onSubmit={composeMailHandler}

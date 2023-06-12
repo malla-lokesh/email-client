@@ -7,6 +7,7 @@ import Authentication from './Components/Authentication';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import WelcomePage from './Pages/WelcomePage';
 import { useSelector } from 'react-redux';
+import InboxViewPage from './Pages/InboxViewPage';
 
 function App() {
   const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path='/welcome'>
             {isLoggedIn ? <WelcomePage/> : <Redirect to='/authentication' />}
+          </Route>
+          <Route>
+            {isLoggedIn ? <InboxViewPage/> : <Redirect to='/authentication'/>}
           </Route>
         </Switch>
       </Router>

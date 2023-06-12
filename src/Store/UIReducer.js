@@ -2,7 +2,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const initialUiState = {
     theme: 'light',
-    composeMail: false
+    composeMail: false,
 }
 
 const ui = createSlice({
