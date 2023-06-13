@@ -10,7 +10,7 @@ const InboxViewPage = () => {
   const [selectedMsg, setSelectedMsg] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -40,7 +40,7 @@ const InboxViewPage = () => {
 
       if (!selectedMsg.read) {
         dispatch(inboxActions.decrementUnReadMails());
-      }      
+      }
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +50,7 @@ const InboxViewPage = () => {
     if (!message.read) {
       markMessageAsRead(message.id);
     }
-    
+
     setSelectedMsg(message);
     setShowModal(true);
   };
@@ -81,28 +81,28 @@ const InboxViewPage = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://email-client-31403-default-rtdb.firebaseio.com/${myEmail}/myInbox.json`
-        );
-        if (!response.ok) {
-          throw new Error("Something went wrong...");
-        } else {
-          const jsonData = await response.json();
-          setMyMails(jsonData);
+    const interval = setInterval(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            `https://email-client-31403-default-rtdb.firebaseio.com/${myEmail}/myInbox.json`
+          );
+          if (!response.ok) {
+            throw new Error("Something went wrong...");
+          } else {
+            const jsonData = await response.json();
+            setMyMails(jsonData);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      };
 
-    fetchData();
+      fetchData();
+    }, 2000);
 
-    if (selectedMsg && !selectedMsg.read) {
-      markMessageAsRead(selectedMsg.id);
-    }
-  }, [myEmail, selectedMsg]);
+    return () => clearInterval(interval);
+  }, [myEmail]);
 
   useEffect(() => {
     const countUnreadMails = () => {
@@ -111,7 +111,6 @@ const InboxViewPage = () => {
           return !message.read ? acc + 1 : acc;
         }, 0);
 
-        // Update unReadMails count in the reducer
         dispatch(inboxActions.setUnReadMails(count));
       }
     };

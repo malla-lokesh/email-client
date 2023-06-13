@@ -5,7 +5,6 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import Authentication from './Components/Authentication';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import WelcomePage from './Pages/WelcomePage';
 import { useSelector } from 'react-redux';
 import InboxViewPage from './Pages/InboxViewPage';
 import SentMail from './Pages/SentMail';
@@ -20,7 +19,7 @@ function App() {
         <Header/>
         <Switch>
           <Route path='/' exact>
-            {isLoggedIn ? <Redirect to='/welcome' /> : <Redirect to='/authentication' />}
+            {isLoggedIn ? <Redirect to='/inbox' /> : <Redirect to='/authentication' />}
           </Route>
           <Route path='/authentication'>
             {!isLoggedIn ? <Authentication/> : <Redirect to='/inbox' />}
@@ -31,8 +30,8 @@ function App() {
           <Route path='/sent-mail'>
             {isLoggedIn ? <SentMail/> : <Redirect to='/authentication'/>}
           </Route>
-          <Route>
-            {isLoggedIn ? <ComposeMail/> : <Redirect to='/compose-mail'/>}
+          <Route path='/compose-mail'>
+            {isLoggedIn ? <ComposeMail/> : <Redirect to='/authentication'/>}
           </Route>
         </Switch>
       </Router>

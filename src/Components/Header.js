@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Nav, Offcanvas, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../Store/AuthReducer";
+import { useSelector, useDispatch } from "react-redux";
 import './Header.css';
-import { uiActions } from "../Store/UIReducer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { authActions } from "../Store/AuthReducer";
 
 const Header = () => {
-    const dispatch = useDispatch();
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
     const [showMenu, setShowMenu] = useState(false);
-
-    const composeMailHandler = () => {
-        dispatch(uiActions.setComposeMail(true))
-    }
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleShow = () => setShowMenu(true);
     const handleClose = () => setShowMenu(false);
+
+    const handleLogout = () => {
+        dispatch(authActions.setLogout());
+        history.push('/authentication');
+    };
 
     return (
         <Container fluid>
@@ -52,7 +53,7 @@ const Header = () => {
                 </Col>
                 {isLoggedIn && <Col className={`${!isLoggedIn ? 'text-center' : 'd-flex justify-content-end align-items-center'}`}>
                     {isLoggedIn &&
-                        <Button variant="outline-light" onClick={() => dispatch(authActions.setLogout(false))}>
+                        <Button variant="outline-light" onClick={handleLogout}>
                             Logout
                         </Button>}
                 </Col>}
