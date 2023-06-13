@@ -55,6 +55,31 @@ const InboxViewPage = () => {
     setShowModal(true);
   };
 
+  const handleDelete = async (messageId) => {
+    try {
+      await fetch(
+        `https://email-client-31403-default-rtdb.firebaseio.com/${myEmail}/myInbox/${messageId}.json`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (selectedMsg && selectedMsg.id === messageId) {
+        setSelectedMsg(null);
+        setShowModal(false);
+      }
+
+      const updatedMails = { ...myMails };
+      delete updatedMails[messageId];
+      setMyMails(updatedMails);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,42 +106,58 @@ const InboxViewPage = () => {
 
   useEffect(() => {
     const countUnreadMails = () => {
-      const count = Object.values(myMails).reduce((acc, message) => {
-        return !message.read ? acc + 1 : acc;
-      }, 0);
+      if (myMails) {
+        const count = Object.values(myMails).reduce((acc, message) => {
+          return !message.read ? acc + 1 : acc;
+        }, 0);
 
-      // Update unReadMails count in the reducer
-      dispatch(inboxActions.setUnReadMails(count));
+        // Update unReadMails count in the reducer
+        dispatch(inboxActions.setUnReadMails(count));
+      }
     };
 
     countUnreadMails();
   }, [myMails, dispatch]);
 
-  const mails = myMails ? Object.keys(myMails).map((key) => {
-    const message = myMails[key];
-    const isRead = message.read;
+  const mails = myMails
+    ? Object.keys(myMails).map((key) => {
+        const message = myMails[key];
+        const isRead = message.read;
 
-    return (
-      <ListGroupItem 
-        key={key}
-        style={{ cursor: 'pointer' }}
-        onClick={() => handleMsgClick({ ...message, id: key })}
-      >
-        {!isRead && <div
-          style={{
-
-            display: "inline-block",
-            width: "10px",
-            height: "10px",
-            borderRadius: "25px",
-            backgroundColor: "blue",
-            marginRight: "12px",
-          }}
-        />}
-        {message.from} - {message.subject} - {message.message}
-      </ListGroupItem>
-    );
-  }) : null;
+        return (
+          <ListGroupItem
+            key={key}
+            style={{ cursor: 'pointer' }}
+            onClick={() => handleMsgClick({ ...message, id: key })}
+          >
+            {!isRead && (
+              <div
+                style={{
+                  display: "inline-block",
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "25px",
+                  backgroundColor: "blue",
+                  marginRight: "12px",
+                }}
+              />
+            )}
+            {message.from} - {message.subject} - {message.message}
+            <Button
+              variant="danger"
+              size="sm"
+              style={{ marginLeft: '10px' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(key);
+              }}
+            >
+              Delete
+            </Button>
+          </ListGroupItem>
+        );
+      })
+    : null;
 
   return (
     <React.Fragment>
