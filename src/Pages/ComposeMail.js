@@ -66,12 +66,14 @@ const ComposeMail = () => {
 
     return <React.Fragment>
         <Row md="auto">
-            {showComposeMail && <Form 
+            <Form 
                 className="border p-4"
                 style={{
                     position: 'fixed',
                     bottom: 10,
-                    right: 10,
+                    right: 350,
+                    left: 350,
+                    bottom: 10,
                     height: '450px',
                     zIndex: 10,
                     backgroundColor: 'whitesmoke',
@@ -81,7 +83,6 @@ const ComposeMail = () => {
             >
                 <div className="d-flex justify-content-between">
                     <h5>Compose</h5>
-                    <CloseButton onClick={() => dispatch(uiActions.setComposeMail(false))}/>
                 </div>
                 <hr/>
                 <FormGroup className="mb-3">
@@ -116,7 +117,7 @@ const ComposeMail = () => {
                     type="submit"
                     className="mt-5"
                 >Send</Button>
-            </Form>}
+            </Form>
         </Row>
     </React.Fragment>
 };

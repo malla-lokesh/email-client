@@ -9,7 +9,7 @@ const Authentication = () => {
     const isLoginForm = useSelector(state => state.authentication.isLoginForm);
 
     return <React.Fragment>
-        <Row md="auto" className="d-flex justify-content-center">
+        <Row md="auto" className="mt-5 d-flex justify-content-center">
             <Col md="auto"></Col>
             <Col md="4" className="d-flex-col border p-4">
                 <h6>👇Sign in (OR) Login</h6>

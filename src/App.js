@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import WelcomePage from './Pages/WelcomePage';
 import { useSelector } from 'react-redux';
 import InboxViewPage from './Pages/InboxViewPage';
+import SentMail from './Pages/SentMail';
+import ComposeMail from './Pages/ComposeMail';
 
 function App() {
   const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
@@ -21,13 +23,16 @@ function App() {
             {isLoggedIn ? <Redirect to='/welcome' /> : <Redirect to='/authentication' />}
           </Route>
           <Route path='/authentication'>
-            {!isLoggedIn ? <Authentication/> : <Redirect to='/welcome' />}
+            {!isLoggedIn ? <Authentication/> : <Redirect to='/inbox' />}
           </Route>
-          <Route path='/welcome'>
-            {isLoggedIn ? <WelcomePage/> : <Redirect to='/authentication' />}
+          <Route path='/inbox'>
+            {isLoggedIn ? <InboxViewPage/> : <Redirect to='/authentication'/>}
+          </Route>
+          <Route path='/sent-mail'>
+            {isLoggedIn ? <SentMail/> : <Redirect to='/authentication'/>}
           </Route>
           <Route>
-            {isLoggedIn ? <InboxViewPage/> : <Redirect to='/authentication'/>}
+            {isLoggedIn ? <ComposeMail/> : <Redirect to='/compose-mail'/>}
           </Route>
         </Switch>
       </Router>
